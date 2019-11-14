@@ -1,7 +1,7 @@
 # Author : Ameya Bhamare
 
 from datetime import datetime
-
+startTime = datetime.now()
 
 l = []
 def generateColumns(start, end):
@@ -32,9 +32,9 @@ import numpy as np
 X_train, y_train, X_test, y_test = np.array(X_train), np.array(y_train), np.array(X_test), np.array(y_test)
 
 # importing the required layers from keras
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense
-from tensorflow.python.keras.layers import Activation
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import Activation
 
 # layering up the cnn
 model = Sequential()
@@ -48,9 +48,8 @@ opt = 'adam'
 model.compile(loss = 'binary_crossentropy', optimizer = opt, metrics = ['accuracy'])
 
 # training
-startTime = datetime.now()
 model.fit(X_train, y_train, batch_size = 2, epochs = 50, validation_data = (X_test, y_test), verbose = 2)
-endTime = datetime.now()
+
 '''
 # serialize model to JSON
 model_json = model.to_json()
@@ -79,14 +78,16 @@ print("\n")
 print("Confusion Matrix : ")
 print(cm)
 print("\n")
-
+for layer in model.layers:
+    weights = layer.get_weights()
+    print(list(weights))
 # creating a dataframe to show results
 df_results = pd.DataFrame()
 df_results['Actual label'] = y_test
 df_results['Predicted value'] = y_pred
 df_results['Predicted label'] = y_pred_labels
-df_results.to_csv("Results.csv")
+#print(df_results)
 
 # printing execution time of script
 print("\n")
-print("Execution time in seconds = ", endTime - startTime)
+print("Execution time in seconds = ", datetime.now() - startTime)
