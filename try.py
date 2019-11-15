@@ -11,8 +11,8 @@ class neuralNet:
         self.output_neurons=1
 
     def init_parameters(self):
-        no_of_wts = (self.input_neurons * self.hidden_neurons) + (self.hidden_neurons*self.output_neurons)
-        no_of_bias = self.hidden_neurons + self.output_neurons
+        self.no_of_wts = (self.input_neurons * self.hidden_neurons) + (self.hidden_neurons*self.output_neurons)
+        self.no_of_bias = self.hidden_neurons + self.output_neurons
 
         w=[]
         b=[]
@@ -54,6 +54,7 @@ class optimize(neuralNet):
 
     def Find_neighbors(self,num,learning_rate):
         # %NEED TO DO: 
+        pass
 
     def Converged(self,a,b,lim):
         if(len(a)!=len(b)):

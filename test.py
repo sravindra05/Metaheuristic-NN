@@ -109,3 +109,18 @@ def weighted_average(self,data,wt,b):
             return Sum
 
     # Heuristic
+
+def Find_neighbor():
+    rand = random.randrange(0,self.no_of_wts)
+    w = flatten(self.weights)
+    for i in range(rand):
+        r=random.randrange(0,self.no_of_wts)
+        w[r]+= self.learning_rate#increment here
+
+    rand = random.randrange(0,self.no_of_bias)
+    b = flatten(self.bias)
+    for i in range(rand):
+        r=random.randrange(0,self.no_of_bias)
+        b[r]+= self.learning_rate#increment here
+    return(w,b)
+    

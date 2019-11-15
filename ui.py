@@ -13,28 +13,23 @@ title.pack(fill=tkinter.X)
 body = tkinter.Frame(frame,bg='#bdbdbd')
 body.pack(fill=tkinter.X)
 
-b1 = tkinter.Frame(body,bg='#bdbdbd',width = 200,height=30)
+b1 = tkinter.Frame(body,bg='#bdbdbd',width = 150,height=20)
 b1.pack(side=tkinter.LEFT)
-b2 = tkinter.Frame(body,bg='#bdbdbd',width = 200,height=30)
+b2 = tkinter.Frame(body,bg='#bdbdbd',width = 150,height=20)
 b2.pack(side=tkinter.LEFT)
-b3 = tkinter.Frame(body,bg='#bdbdbd',width = 200,height=30)
+b3 = tkinter.Frame(body,bg='#bdbdbd',width = 150,height=20)
 b3.pack(side=tkinter.LEFT)
-b4 = tkinter.Frame(body,bg='#bdbdbd')
-b4.pack(fill = tkinter.X)
+b4 = tkinter.Frame(body,bg='#bdbdbd',width = 150,height=20)
+b4.pack(side=tkinter.LEFT)
 
-userIP1 = tkinter.Frame(frame,bg='#bdbdbd',width=200,height=60)
-userIP1.pack()
-userIP2 = tkinter.Frame(frame,bg='#bdbdbd',width=200,height=60)
-userIP2.pack()
-userIP3 = tkinter.Frame(frame,bg='#bdbdbd',width=200,height=60)
-userIP3.pack()
-
-output1 = tkinter.Frame(frame,bg='#bdbdbd',width = 200)
+output1 = tkinter.Frame(frame,bg='#bdbdbd',width = 150)
 output1.pack(side=tkinter.LEFT)
-output2 = tkinter.Frame(frame,bg='#bdbdbd',width = 200)
+output2 = tkinter.Frame(frame,bg='#bdbdbd',width = 150)
 output2.pack(side=tkinter.LEFT)
-output3 = tkinter.Frame(frame,bg='#bdbdbd',width = 200)
+output3 = tkinter.Frame(frame,bg='#bdbdbd',width = 150)
 output3.pack(side=tkinter.LEFT)
+output4 = tkinter.Frame(frame,bg='#bdbdbd',width = 150)
+output4.pack(side=tkinter.LEFT)
 
 def run_backprop():
     os.system('python3 /Users/pragnya/Documents/GitHub/Metaheuristic-NN/DNNEye.py > result1.txt')
@@ -56,12 +51,12 @@ def run_backprop():
 
 
     # print(time)
-    tkinter.Label(output1, text = "With Backpropogation:",  font =('Roboto', 20,'bold'),bg = '#bdbdbd',fg="#4e342e").pack(padx=40) 
-    tkinter.Label(output1, text = time,  font =('Roboto', 16),bg = '#bdbdbd',fg="#4e342e").pack(padx=40) 
-    tkinter.Label(output1, text = accuracy,  font =('Roboto', 16),bg = '#bdbdbd',fg="#4e342e").pack(padx=40) 
-    tkinter.Label(output1, text = loss,  font =('Roboto', 16),bg = '#bdbdbd',fg="#4e342e").pack(padx=40) 
-    tkinter.Label(output1, text = val_accuracy,  font =('Roboto', 16),bg = '#bdbdbd',fg="#4e342e").pack(padx=40) 
-    tkinter.Label(output1, text = val_loss,  font =('Roboto', 16),bg = '#bdbdbd',fg="#4e342e").pack(padx=40) 
+    tkinter.Label(output1, text = "With Backpropogation:",  font =('Roboto', 16,'bold'),bg = '#bdbdbd',fg="#4e342e").pack(side=tkinter.TOP,padx=10) 
+    tkinter.Label(output1, text = time,  font =('Roboto', 12),bg = '#bdbdbd',fg="#4e342e").pack(side=tkinter.TOP,padx=10) 
+    tkinter.Label(output1, text = accuracy,  font =('Roboto', 12),bg = '#bdbdbd',fg="#4e342e").pack(side=tkinter.TOP,padx=10) 
+    tkinter.Label(output1, text = loss,  font =('Roboto', 12),bg = '#bdbdbd',fg="#4e342e").pack(side=tkinter.TOP,padx=10) 
+    tkinter.Label(output1, text = val_accuracy,  font =('Roboto', 12),bg = '#bdbdbd',fg="#4e342e").pack(side=tkinter.TOP,padx=10) 
+    tkinter.Label(output1, text = val_loss,  font =('Roboto', 12),bg = '#bdbdbd',fg="#4e342e").pack(side=tkinter.TOP,padx=10) 
 
 def SA_iters():
     global pop1
@@ -112,18 +107,21 @@ results = dict()
 
 
 
-button1 = tkinter.Button(b1, text='Backpropogation', command=run_backprop,width=26,pady= 5,bg = '#B2EBF2',font = ('Roboto',14),fg='#4e342e')
-button1.pack(padx = 90,pady = 30,side=tkinter.TOP) 
+button1 = tkinter.Button(b1, text='Backpropogation', command=run_backprop,width=20,height=3,pady= 5,bg = '#B2EBF2',font = ('Roboto',14),fg='#4e342e')
+button1.pack(padx = 50,pady = 30,side=tkinter.TOP) 
 # button1.configure(background = "#B2EBF2")
 
-button2 = tkinter.Button(b2, text='Eagle Strategy+Simulated Annealing', command=SA_iters,width=26,pady=5,bg = '#B2EBF2',font = ('Roboto',14),fg='#4e342e')
-button2.pack(padx = 90,pady = 30, side = tkinter.TOP) 
+button2 = tkinter.Button(b2, text='Run Eagle Strategy\nwith Simulated Annealing', command=SA_iters,width=20,height=3,pady=5,bg = '#B2EBF2',font = ('Roboto',14),fg='#4e342e')
+button2.pack(padx = 50,pady = 30, side = tkinter.TOP) 
 # button2.configure(background = "#B2EBF2")
 
-button3 = tkinter.Button(b3, text='Eagle Strategy+Genetic Algorithm' , command=GA_iters,width=26,pady=5,bg = '#B2EBF2',font = ('Roboto',14),fg='#4e342e')
-button3.pack(padx = 90,pady = 30, side = tkinter.TOP)
+button3 = tkinter.Button(b3, text='Run Eagle Strategy \nwith Genetic Algorithm' , command=GA_iters,width=20,height=3,pady=5,bg = '#B2EBF2',font = ('Roboto',14),fg='#4e342e')
+button3.pack(padx = 50,pady = 30, side = tkinter.TOP)
 
-button4 = tkinter.Button(b4, text='Generate graphs' , command=gen_graph,width=26,pady=5,bg = '#B2EBF2',font = ('Roboto',14),fg='#4e342e')
-button4.pack(padx = 90,pady = 60, side = tkinter.TOP)
+button4 = tkinter.Button(b4, text='Run Eagle Strategy \nwith Genetic Algorithm \nand Simulated Annealing' , command=GA_iters,width=20,height=3,pady=5,bg = '#B2EBF2',font = ('Roboto',14),fg='#4e342e')
+button4.pack(padx = 50,pady = 30, side = tkinter.TOP)
+
+# button4 = tkinter.Button(b5, text='Generate graphs' , command=gen_graph,width=26,pady=5,bg = '#B2EBF2',font = ('Roboto',14),fg='#4e342e')
+# button4.pack(padx = 90,pady = 60, side = tkinter.TOP)
 
 tkinter.mainloop() 
