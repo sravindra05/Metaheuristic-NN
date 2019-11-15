@@ -2,36 +2,41 @@ import math
 
 class neuralNet:
     def __init__():
-        # NN specification 
-        print("How many neurons in input layer: ")
-        self.input_neurons= int(input())
-        # print("Input layer Activation function: ")
-        # self.input_activation_fn=input().toLower()
+        self.input_neurons=24
+        self.hidden_neurons=4
+        self.output_neurons=1
 
-        '''
-        print("How many hidden layers:")
-        self.hidden_layers=int(input())
-        self.HL_neuron_count=[]
-        self.HL_activation_fn=[]
-        for i in range self.hidden_layers():
-            print("How many layers in hidden layer ",self.hidden_layer+1,":",sep="")
-            self.HL_neuron_count.append(int(input()))
-            print("Activation function for hidden layer ",self.hidden_layer+1,":",sep="")
-            self.HL_activation_fn.append(input()).toLower()
-        '''
-        print("How many neurons in hidden layer: ")
-        self.hidden_neurons= int(input())
-        print("Hidden Layer Activation function: ")
-        self.hidden_activation_fn=input().toLower()
+    def init_parameters(self):
+        no_of_wts = (self.input_neurons * self.hidden_neurons) + (self.hidden_neurons*self.output_neurons)
+        no_of_bias = self.hidden_neurons + self.output_neurons
 
-        print("How many neurons in output layer: ")
-        self.output_neurons= int(input())
-        print("Output layer Activation function: ")
-        self.output_activation_fn=input().toLower()
+        w=[]
+        b=[]
+        
+        for i in range(no_of_wts):
+            w.append(random.uniform(-2,2))
 
-    def initialize_parameters():
-        self.weights = [[HN1(24)],[HN2(24)],[HN3(24)],[ [ON1(num_of_hidden_neurons)]]]
-        self.bias = [ [HN1, HN2, HN3,H4],[ON1,ON2,ON3,..]]
+        for i in range(no_of_bias):
+            b.append(random.uniform(-2,2))
+
+        self.weights = unflatten(w)
+        self.bias = unflatten(b)
+
+
+    def unflatten(self,array):
+        i=0
+        w=[[],[]]
+        while(i<(self.input_neurons*self.hidden_neurons)):
+            w[0].append(list(array[i:i+self.input_neurons]))
+            i+=self.input_neurons
+        while(i<(self.hidden_neurons*self.output_neurons)):
+            w[1].append(list(array[i:i+self.hidden_neurons]))
+            i+=self.hidden_neurons
+        return(w)
+
+    def flatten(self,array):
+        pass
+        
 
     def weighted_average(self,data,wt,b):
         if(len(input)!=len(wt)):
@@ -85,8 +90,7 @@ class neuralNet:
         else:
             raise Exception("Activation function not supported")
             # output.append((i,Sum))
-        
-        
+
         error = true_class - Sum
         error = -1 * (true_class * math.log(Sum)+((1-true_class)*math.log(1-Sum)))
         return error
