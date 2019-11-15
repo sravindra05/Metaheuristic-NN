@@ -11,6 +11,8 @@ from opt_probs import ContinuousOpt
 from neural import NeuralNetwork
 from datetime import datetime
 import random
+import copy
+from sklearn import preprocessing
 
 
 l = []
@@ -26,7 +28,7 @@ eyes = generateColumns(1, 12)
 
 # reading in the csv as a dataframe
 df = pd.read_csv(
-    "/Users/sarangravindra/Documents/Sarang/Sem-5/AI/Codes/Eyes.csv")
+    "/Users/pragnya/Documents/GitHub/Metaheuristic-NN/Eyes.csv")
 
 # selecting the features and target
 X = df[eyes]
@@ -53,26 +55,35 @@ nn = NeuralNetwork(hidden_nodes=[4], activation='relu',
 
 def Find_neighbors(nn,wts,lr):
     r = random.randrange(0,len(wts))
-    w=[]
+    w=copy.deepcopy(wts)
     for i in range(r):
-        w.append(wts[i]+ lr)
+        ind = random.randrange(0,len(wts))
+        w[ind]+= lr
+    # print(w)
     return w
+
+def normalize(array):
+    sm = sum(array)
+
+    ret = []
+    for e in array:
+        ret.append(e/sm)
+    return ret
 
 def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_iters=np.inf,lr = 0.1):
     def reproduce(parent1,parent2,mutation_prob):
-        _n = np.random.randint(len(parent1))
+        n = np.random.randint(len(parent1))
         child = np.array([0]*len(parent1))
-        child[0:_n+1] = parent1[0:_n+1]
-        child[_n+1:] = parent2[_n+1:]
-
+        # print(parent1)
+        child[0:n+1] = parent1[0:n+1]
+        child[n+1:] = parent2[n+1:]
+        print(child)
         rand = np.random.uniform(size=len(parent1))
         mutate = np.where(rand < mutation_prob)[0]
         
         for i in mutate:
-            if(child[i]==1):
-                child[i]=0
-            else:
-                child[i]=1
+            child[i] = np.random.uniform(-3,3)
+        # print(child)
         return child
     
     # if curve:
@@ -81,6 +92,9 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
     population=[]
     for i in range(pop_size):
         w = Find_neighbors(nn,wts,lr)
+        # print("---------------------")
+        # print(len(w))
+        # print("---------------------")
         population.append(w)
 
     attempts = 0
@@ -89,15 +103,18 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
     # Calculate breeding probabilities
     breeding_prob=[]
     for i in range(pop_size):
+        # print("---------------------")
+        # print(len(population[i]))
+        # print("---------------------")
         nn.fit(X_train, y_train, population[i])
         y_train_pred = nn.predict(X_train)
         acc1 = accuracy_score(y_train, y_train_pred)
         breeding_prob.append(acc1)
 
-
     while (attempts < max_attempts) and (iters < max_iters):
         iters += 1
 
+        bp = normalize(breeding_prob)
         
         # Create next generation of population
         next_gen = []
@@ -106,7 +123,7 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
         for _ in range(pop_size):
             # Select parents
             selected = np.random.choice(pop_size, size=2,
-                                        p=breeding_prob)
+                                        p=bp)
             parent_1 = population[selected[0]]
             parent_2 = population[selected[1]]
 
@@ -143,14 +160,15 @@ def levy_walk(n):
         mn = np.min(weights)
         mx = np.max(weights)
         weights1 = 6*((weights - mn)/(mx-mn)) - 3
+        # print(weights1)
         nn.fit(X_train, y_train, weights1)
         y_train_pred = nn.predict(X_train)
         acc1 = accuracy_score(y_train, y_train_pred)
+        # print(len(weights1))
         if(acc1 != None and acc1 > 0.5):
             (best_fit, accuracy) = genetic_algorithm(weights1,max_iters=10)
-            if accuracy>max_acc:
-                max_acc=accuracy
-                print(accuracy)
+            print(accuracy)
+levy_walk(10)
 
 
 
