@@ -1,4 +1,8 @@
 import math
+from tensorflow.python.keras.layers import Activation
+from tensorflow.python.keras.layers import Dense
+from tensorflow.python.keras.models import Sequential
+
 
 class neuralNet:
     def __init__():
@@ -38,68 +42,8 @@ class neuralNet:
         pass
         
 
-    def weighted_average(self,data,wt,b):
-        if(len(input)!=len(wt)):
-            raise Exception("Number of weights and inputs must be the same")
-        else:
-            Sum=0
-            for i in range(len(data)):
-                Sum+=wt[i]*data[i]
-            Sum=Sum - b
-            return Sum
-
-    def Relu(self,inputs,wt,b):
-        Sum = weighted_average(inputs,wt,b)
-        if(Sum<0):
-            return 0
-        else:
-            return Sum
-
-    def Sigmoid(self,inputs,wt,b):
-        Sum = weighted_average(inputs,wt,b)
-        Sum = math.exp(-1*Sum)
-        Sum = 1 + Sum
-        Sum = 1/Sum
-        return(Sum)
-
-    def Softmax(self,inputs,wt,b):
-
-    # Heuristic
-    def Loss(self,input,wt,b,true_class):
-        # hidden layer forward feed
-        hidden = []
-        for i in range(self.hidden_neurons):
-            WT = wt[0][i]
-            B = b[0][i]
-            if self.hidden_activation_fn == 'relu':
-                Sum = self.Relu(input,wt,b)
-            elif self.output_activation_fn == 'sigmoid':
-                Sum = self.Sigmoid(input,wt,b)
-            else:
-                raise Exception("Activation function not supported")
-            hidden.append(Sum)
-            
-        output = []
-        # for i in range(self.output_neurons):
-        WT = wt[1]
-        B = b[1]
-        if self.output_activation_fn == 'relu':
-            Sum = self.Relu(hidden,wt,b)
-        elif self.output_activation_fn == 'sigmoid':
-            Sum = self.Sigmoid(hidden,wt,b)
-        else:
-            raise Exception("Activation function not supported")
-            # output.append((i,Sum))
-
-        error = true_class - Sum
-        error = -1 * (true_class * math.log(Sum)+((1-true_class)*math.log(1-Sum)))
-        return error
-
-    def Total_loss(self,inputs,wt,b,true_class):
-        error = 0
-        for i in range(len(inputs)):
-            error+ = Loss(inputs[i],wt,b,true_class[i])
-        return(error)
+    
+    
 
 
 class optimize(neuralNet):
