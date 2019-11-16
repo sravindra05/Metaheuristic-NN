@@ -178,7 +178,7 @@ def levyAndGA(n):
         best_wts = []
         if(acc1 != None and acc1 > 0.5):
             (best_fit, accuracy,Loss) = genetic_algorithm(weights1,max_iters=10)
-            print(accuracy)
+            print(accuracy,Loss)
             losses.append(Loss)
             if(accuracy>max_acc):
                 max_acc = accuracy
@@ -187,11 +187,10 @@ def levyAndGA(n):
     y_test_pred = nn.predict(X_test)
     acc1 = accuracy_score(y_test, y_test_pred)
     print("Test accuracy obtained was: ",acc1)
-    print(losses)
 
-startTime = datetime.now()
-levyAndGA(10)
-print("\n\nExecution time is: ",datetime.now()-startTime)
+# startTime = datetime.now()
+# levyAndGA(10)
+# print("\n\nExecution time is: ",datetime.now()-startTime)
 
 
 def levyAndSA(n):
@@ -246,5 +245,5 @@ def eagle_strategy(choice,iterations):
         levyAndGA(iterations)
         levyAndSA(iterations)
 
-eagle_strategy(1,5)
+eagle_strategy()
 
