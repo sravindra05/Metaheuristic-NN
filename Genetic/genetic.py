@@ -6,7 +6,7 @@ import numpy as np
 from sklearn.metrics import log_loss
 from scipy.stats import uniform
 from scipy.stats import levy
-from mlrose import *
+import mlrose
 from opt_probs import ContinuousOpt
 from neural import NeuralNetwork
 from datetime import datetime
@@ -28,7 +28,7 @@ eyes = generateColumns(1, 12)
 
 # reading in the csv as a dataframe
 df = pd.read_csv(
-    "/Users/pragnya/Documents/GitHub/Metaheuristic-NN/Eyes.csv")
+    "Eyes.csv")
 
 # selecting the features and target
 X = df[eyes]
@@ -53,14 +53,20 @@ nn = NeuralNetwork(hidden_nodes=[4], activation='relu',
                    early_stopping=False, clip_max=2, max_attempts=10,
                    random_state=3)
 
-def Find_neighbors(nn,wts,lr):
-    r = random.randrange(0,len(wts))
-    w=copy.deepcopy(wts)
+
+def Find_neighbors(nn, wts, lr):
+    r = random.randrange(0, len(wts))
+    w = copy.deepcopy(wts)
+    n=[]
     for i in range(r):
-        ind = random.randrange(0,len(wts))
-        w[ind]+= lr
+        ind = random.randrange(0, len(wts))
+        w[ind] += lr
+        n.append(w)
+        w[ind] -= lr
+        n.append(w)
     # print(w)
-    return w
+    return n
+
 
 def normalize(array):
     sm = sum(array)
@@ -70,38 +76,36 @@ def normalize(array):
         ret.append(e/sm)
     return ret
 
-def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_iters=np.inf,lr = 0.1):
-    def reproduce(parent1,parent2,mutation_prob):
+
+def genetic_algorithm(wts, pop_size=200, mutation_prob=0.1, max_attempts=10, max_iters=np.inf, lr=0.1):
+    def reproduce(parent1, parent2, mutation_prob):
         n = np.random.randint(len(parent1))
         child = np.array([0]*len(parent1))
         # print(parent1)
         child[0:n+1] = parent1[0:n+1]
         child[n+1:] = parent2[n+1:]
-        print(child)
+        #print(child)
         rand = np.random.uniform(size=len(parent1))
         mutate = np.where(rand < mutation_prob)[0]
-        
+
         for i in mutate:
-            child[i] = np.random.uniform(-3,3)
+            child[i] = np.random.uniform(-3, 3)
         # print(child)
         return child
-    
+
     # if curve:
     #     fitness_curve = []
-    
-    population=[]
-    for i in range(pop_size):
-        w = Find_neighbors(nn,wts,lr)
-        # print("---------------------")
-        # print(len(w))
-        # print("---------------------")
-        population.append(w)
 
+    population = []
+    for i in range(pop_size):
+        w = Find_neighbors(nn, wts, lr)
+        population.extend(w)
+    print(population)    
     attempts = 0
     iters = 0
 
     # Calculate breeding probabilities
-    breeding_prob=[]
+    breeding_prob = []
     for i in range(pop_size):
         # print("---------------------")
         # print(len(population[i]))
@@ -115,10 +119,10 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
         iters += 1
 
         bp = normalize(breeding_prob)
-        
+
         # Create next generation of population
         next_gen = []
-        child_fit=[]
+        child_fit = []
 
         for _ in range(pop_size):
             # Select parents
@@ -134,7 +138,7 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
             y_train_pred = nn.predict(X_train)
             acc1 = accuracy_score(y_train, y_train_pred)
             child_fit.append(acc1)
-        
+
         # next_state = best_child()
         next_fitness = max(child_fit)
 
@@ -148,12 +152,13 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
             attempts += 1
     best_wts = population[breeding_prob.index(max(breeding_prob))]
     acc = max(breeding_prob)
-    return(best_wts,acc)
+    return(best_wts, acc)
 
-def levy_walk(n):
+
+def levy_gen(n):
     r = levy.rvs(size=n, scale=2)
     # print(r)
-    max_acc=0
+    max_acc = 0
     for i in list(r):
         weights = np.random.uniform(-1, 1, 104)
         weights = weights*i
@@ -166,10 +171,38 @@ def levy_walk(n):
         acc1 = accuracy_score(y_train, y_train_pred)
         # print(len(weights1))
         if(acc1 != None and acc1 > 0.5):
-            (best_fit, accuracy) = genetic_algorithm(weights1,max_iters=10)
+            (best_fit, accuracy) = genetic_algorithm(weights1, max_iters=10)
             print(accuracy)
-levy_walk(10)
 
 
-
-    
+def levy_sim(n):
+    nn1 = mlrose.NeuralNetwork(hidden_nodes=[4], activation='relu',
+                               algorithm='simulated_annealing', max_iters=750,
+                               bias=True, is_classifier=True, learning_rate=0.35,
+                               early_stopping=False, clip_max=2, max_attempts=10,
+                               random_state=3, curve=True)
+    dummy_nn = NeuralNetwork(hidden_nodes=[4], activation='relu',
+                            algorithm='dummy', max_iters=500,
+                            bias=True, is_classifier=True, learning_rate=0.351,
+                            early_stopping=False, clip_max=2, max_attempts=10,
+                            random_state=3)
+    r = levy.rvs(size=n, scale=2)
+    max_acc = 0
+    for i in list(r):
+            weights = np.random.uniform(-1, 1, 104)
+            weights = weights*i
+            mn = np.min(weights)
+            mx = np.max(weights)
+            weights1 = 6*((weights - mn)/(mx-mn)) - 3
+            dummy_nn.fit(X_train, y_train, weights1)
+            y_train_pred = dummy_nn.predict(X_train)
+            acc1 = accuracy_score(y_train, y_train_pred)
+            if(acc1 != None and acc1 > 0.5):
+                nn1.fit(X_train, y_train, weights1)
+                y_train_pred = nn1.predict(X_train)
+                acc2 = accuracy_score(y_train, y_train_pred)
+                if acc2 != None and acc2 > max_acc:
+                    max_acc = acc2
+                    print(acc2)
+                # print(nn1.fitness_curve)
+levy_sim(1)

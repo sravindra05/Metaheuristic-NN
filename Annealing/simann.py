@@ -42,23 +42,23 @@ X_test = sc.fit_transform(X_test)
 X_train, y_train, X_test, y_test = np.array(X_train), np.array(
     y_train), np.array(X_test), np.array(y_test)
 
-# print(df_results)
+
 nn1 = mlrose.NeuralNetwork(hidden_nodes=[4], activation='relu',
-                           algorithm='simulated_annealing', max_iters=800,
-                           bias=True, is_classifier=True, learning_rate=0.351,
+                           algorithm='simulated_annealing', max_iters=750,
+                           bias=True, is_classifier=True, learning_rate=0.35,
                            early_stopping=False, clip_max=2, max_attempts=10,
                            random_state=3,curve=True)
 
-nn = NeuralNetwork(hidden_nodes=[4], activation='relu',
-                   algorithm='hi', max_iters=500,
+dummy_nn = NeuralNetwork(hidden_nodes=[4], activation='relu',
+                   algorithm='dummy', max_iters=500,
                    bias=True, is_classifier=True, learning_rate=0.351,
                    early_stopping=False, clip_max=2, max_attempts=10,
                    random_state=3)
 
-# printing execution time of script
 
 
-def levy_walk(n):
+
+def levy_sim(n):
     r = levy.rvs(size=n, scale=2)
     # print(r)
     max_acc=0
@@ -68,20 +68,20 @@ def levy_walk(n):
         mn = np.min(weights)
         mx = np.max(weights)
         weights1 = 6*((weights - mn)/(mx-mn)) - 3
-        nn.fit(X_train, y_train, weights1)
-        y_train_pred = nn.predict(X_train)
+        dummy_nn.fit(X_train, y_train, weights1)
+        y_train_pred = dummy_nn.predict(X_train)
         acc1 = accuracy_score(y_train, y_train_pred)
         if(acc1 != None and acc1 > 0.5):
             nn1.fit(X_train, y_train, weights1)
             y_train_pred = nn1.predict(X_train)
             acc2 = accuracy_score(y_train, y_train_pred)
-            if acc2>max_acc:
+            if acc2 != None and acc2>max_acc:
                 max_acc=acc2
                 print(acc2)
                 #print(nn1.fitness_curve)
 
 startTime = datetime.now()
-print(levy_walk(3))
+levy_walk(10)
 print("Execution time in seconds = ", datetime.now() - startTime)
-print("\n")
+
 #print("Execution time in seconds = ", datetime.now() - startTime)
