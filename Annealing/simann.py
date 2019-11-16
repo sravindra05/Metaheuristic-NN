@@ -25,7 +25,7 @@ eyes = generateColumns(1, 12)
 
 # reading in the csv as a dataframe
 df = pd.read_csv(
-    "/Users/sarangravindra/Documents/Sarang/Sem-5/AI/Codes/Eyes.csv")
+    "/Users/pragnya/Documents/GitHub/Metaheuristic-NN/Eyes.csv")
 
 # selecting the features and target
 X = df[eyes]
@@ -44,8 +44,8 @@ X_train, y_train, X_test, y_test = np.array(X_train), np.array(
 
 # print(df_results)
 nn1 = mlrose.NeuralNetwork(hidden_nodes=[4], activation='relu',
-                           algorithm='simulated_annealing', max_iters=800,
-                           bias=True, is_classifier=True, learning_rate=0.351,
+                           algorithm='simulated_annealing', max_iters=400,
+                           bias=True, is_classifier=True, learning_rate=0.1,
                            early_stopping=False, clip_max=2, max_attempts=10,
                            random_state=3,curve=True)
 
@@ -62,6 +62,7 @@ def levy_walk(n):
     r = levy.rvs(size=n, scale=2)
     # print(r)
     max_acc=0
+    max_wts = []
     for i in list(r):
         weights = np.random.uniform(-1, 1, 104)
         weights = weights*i
@@ -71,17 +72,19 @@ def levy_walk(n):
         nn.fit(X_train, y_train, weights1)
         y_train_pred = nn.predict(X_train)
         acc1 = accuracy_score(y_train, y_train_pred)
-        if(acc1 != None and acc1 > 0.5):
+        if(acc1 != None and acc1 > 0.6):
             nn1.fit(X_train, y_train, weights1)
             y_train_pred = nn1.predict(X_train)
             acc2 = accuracy_score(y_train, y_train_pred)
+            print(acc2)
             if acc2>max_acc:
                 max_acc=acc2
-                print(acc2)
+                max_wts = weights1
                 #print(nn1.fitness_curve)
+    print("Best accuracy obtained: ",max_acc)
 
 startTime = datetime.now()
-print(levy_walk(3))
+levy_walk(50)
 print("Execution time in seconds = ", datetime.now() - startTime)
 print("\n")
 #print("Execution time in seconds = ", datetime.now() - startTime)

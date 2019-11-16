@@ -6,13 +6,13 @@ import numpy as np
 from sklearn.metrics import log_loss
 from scipy.stats import uniform
 from scipy.stats import levy
-from mlrose import *
 from opt_probs import ContinuousOpt
 from neural import NeuralNetwork
 from datetime import datetime
 import random
 import copy
 from sklearn import preprocessing
+from datetime import datetime
 
 
 l = []
@@ -53,12 +53,12 @@ nn = NeuralNetwork(hidden_nodes=[4], activation='relu',
                    early_stopping=False, clip_max=2, max_attempts=10,
                    random_state=3)
 
-def Find_neighbors(nn,wts,lr):
+def Find_neighbors(wts,lr):
     r = random.randrange(0,len(wts))
     w=copy.deepcopy(wts)
     for i in range(r):
         ind = random.randrange(0,len(wts))
-        w[ind]+= lr
+        w[ind]+= lr * random.choice([-1,1])
     # print(w)
     return w
 
@@ -70,14 +70,14 @@ def normalize(array):
         ret.append(e/sm)
     return ret
 
-def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_iters=np.inf,lr = 0.1):
+def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_iters=np.inf,lr = 0.3):
     def reproduce(parent1,parent2,mutation_prob):
         n = np.random.randint(len(parent1))
         child = np.array([0]*len(parent1))
         # print(parent1)
         child[0:n+1] = parent1[0:n+1]
         child[n+1:] = parent2[n+1:]
-        print(child)
+        # print(child)
         rand = np.random.uniform(size=len(parent1))
         mutate = np.where(rand < mutation_prob)[0]
         
@@ -91,10 +91,7 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
     
     population=[]
     for i in range(pop_size):
-        w = Find_neighbors(nn,wts,lr)
-        # print("---------------------")
-        # print(len(w))
-        # print("---------------------")
+        w = Find_neighbors(wts,lr)
         population.append(w)
 
     attempts = 0
@@ -103,13 +100,12 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
     # Calculate breeding probabilities
     breeding_prob=[]
     for i in range(pop_size):
-        # print("---------------------")
-        # print(len(population[i]))
-        # print("---------------------")
         nn.fit(X_train, y_train, population[i])
         y_train_pred = nn.predict(X_train)
         acc1 = accuracy_score(y_train, y_train_pred)
         breeding_prob.append(acc1)
+
+    Loss = []
 
     while (attempts < max_attempts) and (iters < max_iters):
         iters += 1
@@ -119,6 +115,7 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
         # Create next generation of population
         next_gen = []
         child_fit=[]
+        child_loss=[]
 
         for _ in range(pop_size):
             # Select parents
@@ -133,10 +130,15 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
             nn.fit(X_train, y_train, child)
             y_train_pred = nn.predict(X_train)
             acc1 = accuracy_score(y_train, y_train_pred)
+            loss = log_loss(y_train,y_pred)
             child_fit.append(acc1)
-        
+            child_loss.append(loss)
+
         # next_state = best_child()
         next_fitness = max(child_fit)
+        loss = child_loss[child_fit.index(next_fitness)]
+        Loss.append(loss)
+        
 
         # If best child is an improvement,
         # move to that state and reset attempts counter
@@ -148,12 +150,13 @@ def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_i
             attempts += 1
     best_wts = population[breeding_prob.index(max(breeding_prob))]
     acc = max(breeding_prob)
-    return(best_wts,acc)
+    return(best_wts,acc,Loss)
 
 def levy_walk(n):
     r = levy.rvs(size=n, scale=2)
     # print(r)
     max_acc=0
+    max_wts = []
     for i in list(r):
         weights = np.random.uniform(-1, 1, 104)
         weights = weights*i
@@ -165,10 +168,22 @@ def levy_walk(n):
         y_train_pred = nn.predict(X_train)
         acc1 = accuracy_score(y_train, y_train_pred)
         # print(len(weights1))
+        max_acc = 0
+        best_wts = []
         if(acc1 != None and acc1 > 0.5):
-            (best_fit, accuracy) = genetic_algorithm(weights1,max_iters=10)
+            (best_fit, accuracy,Loss) = genetic_algorithm(weights1,max_iters=10)
             print(accuracy)
+            if(accuracy>max_acc):
+                max_acc = accuracy
+                best_wts = best_fit
+    nn.fit(X_test, y_test, best_wts)
+    y_test_pred = nn.predict(X_test)
+    acc1 = accuracy_score(y_test, y_test_pred)
+    print("Test accuracy obtained was: ",acc1)
+
+startTime = datetime.now()
 levy_walk(10)
+print("\n\nExecution time is: ",datetime.now()-startTime)
 
 
 
