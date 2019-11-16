@@ -14,10 +14,9 @@ import random
 import copy
 from sklearn import preprocessing
 import matplotlib.pyplot as plt
+import sys
 
-
-l = []
-
+l=[]
 
 def generateColumns(start, end):
     for i in range(start, end+1):
@@ -183,10 +182,14 @@ def levyAndGA(n):
             if(accuracy>max_acc):
                 max_acc = accuracy
                 best_wts = best_fit
-    nn.fit(X_test, y_test, best_wts)
-    y_test_pred = nn.predict(X_test)
-    acc1 = accuracy_score(y_test, y_test_pred)
-    print("Test accuracy obtained was: ",acc1)
+    if(len(best_wts)!=0):
+        nn.fit(X_test, y_test, best_wts)
+        y_test_pred = nn.predict(X_test)
+        acc1 = accuracy_score(y_test, y_test_pred)
+        test_loss = log_loss(y_test,y_test_pred)
+        print("Test accuracy : ",acc1)
+        print("Test loss: ",test_loss)
+    return(best_wts)
 
 # startTime = datetime.now()
 # levyAndGA(10)
@@ -223,14 +226,63 @@ def levyAndSA(n):
                 if acc2 != None and acc2 > max_acc:
                     max_acc = acc2
                     losses=np.append(losses,nn1.fitness_curve)
-                    losses= -losses
-                    print(acc2,losses)
+                    # losses= -losses
+                    print(acc2)
+    y_test_pred=nn1.predict(X_test)
+    acc2 = accuracy_score(y_test, y_test_pred)
+    Loss = log_loss(y_test,y_test_pred)
+    print("Test accuracy:",acc2)
+    print("Test loss:",Loss)
     # x=np.arange(np.size(losses))
     # plt.plot(x,losses)
     # plt.ylabel("Loss")
     # plt.xlabel("Iteration #")
     # plt.title("Log_loss Plot")
     # plt.show()
+
+def levyAndSAGA(n):
+    wts = levyAndGA(n)
+    if(len(wts)==0):
+        wts = np.random.uniform(-1, 1, 104)
+    print('#')
+    nn1 = mlrose.NeuralNetwork(hidden_nodes=[4], activation='relu',
+                               algorithm='simulated_annealing', max_iters=750,
+                               bias=True, is_classifier=True, learning_rate=0.35,
+                               early_stopping=False, clip_max=2, max_attempts=10,
+                               random_state=3, curve=True)
+    dummy_nn = NeuralNetwork(hidden_nodes=[4], activation='relu',
+                            algorithm='dummy', max_iters=500,
+                            bias=True, is_classifier=True, learning_rate=0.351,
+                            early_stopping=False, clip_max=2, max_attempts=10,
+                            random_state=3)
+    r = levy.rvs(size=n, scale=2)
+    max_acc = 0
+    losses=np.array([])
+    weights = wts
+    for i in list(r):
+            weights = weights*i
+            mn = np.min(weights)
+            mx = np.max(weights)
+            weights1 = 6*((weights - mn)/(mx-mn)) - 3
+            dummy_nn.fit(X_train, y_train, weights1)
+            y_train_pred = dummy_nn.predict(X_train)
+            acc1 = accuracy_score(y_train, y_train_pred)
+            if(acc1 != None and acc1 > 0.5):
+                nn1.fit(X_train, y_train, weights1)
+                y_train_pred = nn1.predict(X_train)
+                acc2 = accuracy_score(y_train, y_train_pred)
+                if acc2 != None and acc2 > max_acc:
+                    max_acc = acc2
+                    losses=np.append(losses,nn1.fitness_curve)
+                    # losses= -losses
+                    print(acc2)
+            weights = np.random.uniform(-1, 1, 104)
+    y_test_pred=nn1.predict(X_test)
+    acc2 = accuracy_score(y_test, y_test_pred)
+    Loss = log_loss(y_test,y_test_pred)
+    print("Test accuracy:",acc2)
+    print("Test loss:",Loss)
+
 
 def eagle_strategy(choice,iterations):
     '''Performs a levy flight as global search and either simulated annealing
@@ -242,8 +294,8 @@ def eagle_strategy(choice,iterations):
     elif choice == 2:
         levyAndGA(iterations)
     elif choice == 3:
-        levyAndGA(iterations)
-        levyAndSA(iterations)
+        levyAndSAGA(iterations)
 
-eagle_strategy()
+np.set_printoptions(threshold = sys.maxsize)
+eagle_strategy(int(sys.argv[1]),int(sys.argv[2]))
 

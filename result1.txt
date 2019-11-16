@@ -1,104 +1,104 @@
 Train on 450 samples, validate on 50 samples
 Epoch 1/50
-450/450 - 8s - loss: 0.4569 - accuracy: 0.7578 - val_loss: 0.2966 - val_accuracy: 0.9200
+450/450 - 3s - loss: 0.6502 - accuracy: 0.6289 - val_loss: 0.6517 - val_accuracy: 0.6400
 Epoch 2/50
-450/450 - 1s - loss: 0.3630 - accuracy: 0.8089 - val_loss: 0.2535 - val_accuracy: 0.9600
+450/450 - 1s - loss: 0.3986 - accuracy: 0.8644 - val_loss: 0.4321 - val_accuracy: 0.7800
 Epoch 3/50
-450/450 - 1s - loss: 0.3380 - accuracy: 0.8267 - val_loss: 0.2243 - val_accuracy: 0.9600
+450/450 - 1s - loss: 0.2799 - accuracy: 0.9556 - val_loss: 0.3319 - val_accuracy: 0.8000
 Epoch 4/50
-450/450 - 1s - loss: 0.3210 - accuracy: 0.8311 - val_loss: 0.2017 - val_accuracy: 0.9600
+450/450 - 1s - loss: 0.2171 - accuracy: 0.9644 - val_loss: 0.2632 - val_accuracy: 0.8800
 Epoch 5/50
-450/450 - 1s - loss: 0.3055 - accuracy: 0.8311 - val_loss: 0.1874 - val_accuracy: 0.9600
+450/450 - 1s - loss: 0.1743 - accuracy: 0.9778 - val_loss: 0.2227 - val_accuracy: 0.9800
 Epoch 6/50
-450/450 - 1s - loss: 0.2926 - accuracy: 0.8311 - val_loss: 0.1769 - val_accuracy: 0.9600
+450/450 - 1s - loss: 0.1364 - accuracy: 1.0000 - val_loss: 0.1779 - val_accuracy: 1.0000
 Epoch 7/50
-450/450 - 1s - loss: 0.2807 - accuracy: 0.8311 - val_loss: 0.1602 - val_accuracy: 0.9600
+450/450 - 1s - loss: 0.1055 - accuracy: 0.9978 - val_loss: 0.1504 - val_accuracy: 1.0000
 Epoch 8/50
-450/450 - 1s - loss: 0.2675 - accuracy: 0.8311 - val_loss: 0.1477 - val_accuracy: 0.9600
+450/450 - 1s - loss: 0.0820 - accuracy: 1.0000 - val_loss: 0.1283 - val_accuracy: 1.0000
 Epoch 9/50
-450/450 - 1s - loss: 0.2517 - accuracy: 0.8311 - val_loss: 0.1289 - val_accuracy: 0.9600
+450/450 - 1s - loss: 0.0644 - accuracy: 1.0000 - val_loss: 0.1117 - val_accuracy: 1.0000
 Epoch 10/50
-450/450 - 1s - loss: 0.2213 - accuracy: 0.8311 - val_loss: 0.1159 - val_accuracy: 0.9600
+450/450 - 1s - loss: 0.0518 - accuracy: 1.0000 - val_loss: 0.0988 - val_accuracy: 1.0000
 Epoch 11/50
-450/450 - 1s - loss: 0.1886 - accuracy: 0.8311 - val_loss: 0.1012 - val_accuracy: 0.9600
+450/450 - 1s - loss: 0.0425 - accuracy: 1.0000 - val_loss: 0.0877 - val_accuracy: 1.0000
 Epoch 12/50
-450/450 - 1s - loss: 0.1696 - accuracy: 0.8978 - val_loss: 0.0860 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0354 - accuracy: 1.0000 - val_loss: 0.0787 - val_accuracy: 1.0000
 Epoch 13/50
-450/450 - 2s - loss: 0.1551 - accuracy: 0.9711 - val_loss: 0.0719 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0302 - accuracy: 1.0000 - val_loss: 0.0723 - val_accuracy: 1.0000
 Epoch 14/50
-450/450 - 1s - loss: 0.1426 - accuracy: 0.9867 - val_loss: 0.0784 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0260 - accuracy: 1.0000 - val_loss: 0.0634 - val_accuracy: 1.0000
 Epoch 15/50
-450/450 - 1s - loss: 0.1318 - accuracy: 0.9933 - val_loss: 0.0612 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0231 - accuracy: 1.0000 - val_loss: 0.0589 - val_accuracy: 1.0000
 Epoch 16/50
-450/450 - 1s - loss: 0.1210 - accuracy: 1.0000 - val_loss: 0.0616 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0204 - accuracy: 1.0000 - val_loss: 0.0541 - val_accuracy: 1.0000
 Epoch 17/50
-450/450 - 1s - loss: 0.1127 - accuracy: 0.9978 - val_loss: 0.0504 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0183 - accuracy: 1.0000 - val_loss: 0.0498 - val_accuracy: 1.0000
 Epoch 18/50
-450/450 - 1s - loss: 0.1043 - accuracy: 1.0000 - val_loss: 0.0470 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0167 - accuracy: 1.0000 - val_loss: 0.0464 - val_accuracy: 1.0000
 Epoch 19/50
-450/450 - 1s - loss: 0.0961 - accuracy: 1.0000 - val_loss: 0.0435 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0154 - accuracy: 1.0000 - val_loss: 0.0432 - val_accuracy: 1.0000
 Epoch 20/50
-450/450 - 1s - loss: 0.0886 - accuracy: 1.0000 - val_loss: 0.0399 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0140 - accuracy: 1.0000 - val_loss: 0.0399 - val_accuracy: 1.0000
 Epoch 21/50
-450/450 - 1s - loss: 0.0812 - accuracy: 1.0000 - val_loss: 0.0366 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0130 - accuracy: 1.0000 - val_loss: 0.0367 - val_accuracy: 1.0000
 Epoch 22/50
-450/450 - 1s - loss: 0.0745 - accuracy: 1.0000 - val_loss: 0.0355 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0123 - accuracy: 1.0000 - val_loss: 0.0343 - val_accuracy: 1.0000
 Epoch 23/50
-450/450 - 1s - loss: 0.0684 - accuracy: 1.0000 - val_loss: 0.0417 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0112 - accuracy: 1.0000 - val_loss: 0.0323 - val_accuracy: 1.0000
 Epoch 24/50
-450/450 - 1s - loss: 0.0634 - accuracy: 1.0000 - val_loss: 0.0320 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0106 - accuracy: 1.0000 - val_loss: 0.0305 - val_accuracy: 1.0000
 Epoch 25/50
-450/450 - 1s - loss: 0.0588 - accuracy: 1.0000 - val_loss: 0.0245 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0100 - accuracy: 1.0000 - val_loss: 0.0282 - val_accuracy: 1.0000
 Epoch 26/50
-450/450 - 1s - loss: 0.0544 - accuracy: 1.0000 - val_loss: 0.0277 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0094 - accuracy: 1.0000 - val_loss: 0.0274 - val_accuracy: 1.0000
 Epoch 27/50
-450/450 - 1s - loss: 0.0506 - accuracy: 1.0000 - val_loss: 0.0249 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0090 - accuracy: 1.0000 - val_loss: 0.0251 - val_accuracy: 1.0000
 Epoch 28/50
-450/450 - 1s - loss: 0.0467 - accuracy: 1.0000 - val_loss: 0.0228 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0083 - accuracy: 1.0000 - val_loss: 0.0236 - val_accuracy: 1.0000
 Epoch 29/50
-450/450 - 1s - loss: 0.0433 - accuracy: 1.0000 - val_loss: 0.0196 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0079 - accuracy: 1.0000 - val_loss: 0.0224 - val_accuracy: 1.0000
 Epoch 30/50
-450/450 - 1s - loss: 0.0402 - accuracy: 1.0000 - val_loss: 0.0180 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0074 - accuracy: 1.0000 - val_loss: 0.0210 - val_accuracy: 1.0000
 Epoch 31/50
-450/450 - 1s - loss: 0.0374 - accuracy: 1.0000 - val_loss: 0.0166 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0071 - accuracy: 1.0000 - val_loss: 0.0198 - val_accuracy: 1.0000
 Epoch 32/50
-450/450 - 1s - loss: 0.0345 - accuracy: 1.0000 - val_loss: 0.0154 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0067 - accuracy: 1.0000 - val_loss: 0.0186 - val_accuracy: 1.0000
 Epoch 33/50
-450/450 - 2s - loss: 0.0321 - accuracy: 1.0000 - val_loss: 0.0133 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0064 - accuracy: 1.0000 - val_loss: 0.0178 - val_accuracy: 1.0000
 Epoch 34/50
-450/450 - 1s - loss: 0.0297 - accuracy: 1.0000 - val_loss: 0.0143 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0060 - accuracy: 1.0000 - val_loss: 0.0170 - val_accuracy: 1.0000
 Epoch 35/50
-450/450 - 2s - loss: 0.0276 - accuracy: 1.0000 - val_loss: 0.0165 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0058 - accuracy: 1.0000 - val_loss: 0.0158 - val_accuracy: 1.0000
 Epoch 36/50
-450/450 - 1s - loss: 0.0255 - accuracy: 1.0000 - val_loss: 0.0129 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0054 - accuracy: 1.0000 - val_loss: 0.0147 - val_accuracy: 1.0000
 Epoch 37/50
-450/450 - 1s - loss: 0.0238 - accuracy: 1.0000 - val_loss: 0.0123 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0052 - accuracy: 1.0000 - val_loss: 0.0143 - val_accuracy: 1.0000
 Epoch 38/50
-450/450 - 1s - loss: 0.0220 - accuracy: 1.0000 - val_loss: 0.0116 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0049 - accuracy: 1.0000 - val_loss: 0.0134 - val_accuracy: 1.0000
 Epoch 39/50
-450/450 - 1s - loss: 0.0205 - accuracy: 1.0000 - val_loss: 0.0147 - val_accuracy: 1.0000
+450/450 - 0s - loss: 0.0047 - accuracy: 1.0000 - val_loss: 0.0126 - val_accuracy: 1.0000
 Epoch 40/50
-450/450 - 1s - loss: 0.0189 - accuracy: 1.0000 - val_loss: 0.0085 - val_accuracy: 1.0000
+450/450 - 0s - loss: 0.0045 - accuracy: 1.0000 - val_loss: 0.0122 - val_accuracy: 1.0000
 Epoch 41/50
-450/450 - 1s - loss: 0.0177 - accuracy: 1.0000 - val_loss: 0.0103 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0043 - accuracy: 1.0000 - val_loss: 0.0114 - val_accuracy: 1.0000
 Epoch 42/50
-450/450 - 1s - loss: 0.0164 - accuracy: 1.0000 - val_loss: 0.0080 - val_accuracy: 1.0000
+450/450 - 0s - loss: 0.0041 - accuracy: 1.0000 - val_loss: 0.0111 - val_accuracy: 1.0000
 Epoch 43/50
-450/450 - 1s - loss: 0.0152 - accuracy: 1.0000 - val_loss: 0.0085 - val_accuracy: 1.0000
+450/450 - 1s - loss: 0.0039 - accuracy: 1.0000 - val_loss: 0.0104 - val_accuracy: 1.0000
 Epoch 44/50
-450/450 - 1s - loss: 0.0141 - accuracy: 1.0000 - val_loss: 0.0078 - val_accuracy: 1.0000
+450/450 - 0s - loss: 0.0037 - accuracy: 1.0000 - val_loss: 0.0096 - val_accuracy: 1.0000
 Epoch 45/50
-450/450 - 1s - loss: 0.0131 - accuracy: 1.0000 - val_loss: 0.0074 - val_accuracy: 1.0000
+450/450 - 0s - loss: 0.0035 - accuracy: 1.0000 - val_loss: 0.0092 - val_accuracy: 1.0000
 Epoch 46/50
-450/450 - 1s - loss: 0.0122 - accuracy: 1.0000 - val_loss: 0.0055 - val_accuracy: 1.0000
+450/450 - 0s - loss: 0.0034 - accuracy: 1.0000 - val_loss: 0.0091 - val_accuracy: 1.0000
 Epoch 47/50
-450/450 - 1s - loss: 0.0113 - accuracy: 1.0000 - val_loss: 0.0050 - val_accuracy: 1.0000
+450/450 - 0s - loss: 0.0032 - accuracy: 1.0000 - val_loss: 0.0083 - val_accuracy: 1.0000
 Epoch 48/50
-450/450 - 1s - loss: 0.0105 - accuracy: 1.0000 - val_loss: 0.0065 - val_accuracy: 1.0000
+450/450 - 0s - loss: 0.0031 - accuracy: 1.0000 - val_loss: 0.0078 - val_accuracy: 1.0000
 Epoch 49/50
-450/450 - 1s - loss: 0.0098 - accuracy: 1.0000 - val_loss: 0.0050 - val_accuracy: 1.0000
+450/450 - 0s - loss: 0.0029 - accuracy: 1.0000 - val_loss: 0.0074 - val_accuracy: 1.0000
 Epoch 50/50
-450/450 - 1s - loss: 0.0091 - accuracy: 1.0000 - val_loss: 0.0044 - val_accuracy: 1.0000
+450/450 - 0s - loss: 0.0028 - accuracy: 1.0000 - val_loss: 0.0073 - val_accuracy: 1.0000
 
 
 Confusion Matrix : 
@@ -108,4 +108,4 @@ Confusion Matrix :
 
 
 
-Execution time in seconds =  0:00:56.746806
+Execution time in seconds =  0:00:30.304737
