@@ -13,7 +13,7 @@ from datetime import datetime
 import random
 import copy
 from sklearn import preprocessing
-from datetime import datetime
+import matplotlib.pyplot as plt
 
 
 l = []
@@ -207,6 +207,7 @@ def levyAndSA(n):
                             random_state=3)
     r = levy.rvs(size=n, scale=2)
     max_acc = 0
+    losses=np.array([])
     for i in list(r):
             weights = np.random.uniform(-1, 1, 104)
             weights = weights*i
@@ -223,5 +224,27 @@ def levyAndSA(n):
                 if acc2 != None and acc2 > max_acc:
                     max_acc = acc2
                     print(acc2)
-                # print(nn1.fitness_curve)
-# levyAndSA(1)
+                    losses=np.append(losses,nn1.fitness_curve)
+                    losses= -losses
+    x=np.arange(np.size(losses))
+    plt.plot(x,losses)
+    plt.ylabel("Loss")
+    plt.xlabel("Iteration #")
+    plt.title("Log_loss Plot")
+    plt.show()
+
+def eagle_strategy():
+    '''Performs a levy flight as global search and either simulated annealing
+       or genetic algorithm as a local search."
+    '''
+    alg=input("Enter local search algorithm\n1. Simulated_annealing\n2. Genetic_Algorithm: ")
+    while alg.lower() not in ["simulated_annealing","genetic_algorithm"]:
+        print("Oops, we haven't implemented that. Try Again")
+        alg=input("Enter local search algorithm\n1. Simulated_annealing\n2. Genetic_Algorithm: ")
+    n=int(input("Enter number of iterations of global search"))
+    if(alg=="simulated_annealing"):
+        pass
+    if(alg=="genetic_algorithm"):
+        pass        
+
+levy_sim(5)
