@@ -223,28 +223,28 @@ def levyAndSA(n):
                 acc2 = accuracy_score(y_train, y_train_pred)
                 if acc2 != None and acc2 > max_acc:
                     max_acc = acc2
-                    print(acc2)
                     losses=np.append(losses,nn1.fitness_curve)
                     losses= -losses
-    x=np.arange(np.size(losses))
-    plt.plot(x,losses)
-    plt.ylabel("Loss")
-    plt.xlabel("Iteration #")
-    plt.title("Log_loss Plot")
-    plt.show()
+                    print(acc2,losses)
+    # x=np.arange(np.size(losses))
+    # plt.plot(x,losses)
+    # plt.ylabel("Loss")
+    # plt.xlabel("Iteration #")
+    # plt.title("Log_loss Plot")
+    # plt.show()
 
-def eagle_strategy():
+def eagle_strategy(choice,iterations):
     '''Performs a levy flight as global search and either simulated annealing
        or genetic algorithm as a local search."
     '''
-    alg=input("Enter local search algorithm\n1. Simulated_annealing\n2. Genetic_Algorithm: ")
-    while alg.lower() not in ["simulated_annealing","genetic_algorithm"]:
-        print("Oops, we haven't implemented that. Try Again")
-        alg=input("Enter local search algorithm\n1. Simulated_annealing\n2. Genetic_Algorithm: ")
-    n=int(input("Enter number of iterations of global search"))
-    if(alg=="simulated_annealing"):
-        pass
-    if(alg=="genetic_algorithm"):
-        pass        
+    
+    if choice==1:
+        levyAndSA(iterations)
+    elif choice == 2:
+        levyAndGA(iterations)
+    elif choice == 3:
+        levyAndGA(iterations)
+        levyAndSA(iterations)
 
-levy_sim(5)
+eagle_strategy(1,5)
+
