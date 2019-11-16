@@ -61,7 +61,7 @@ def Find_neighbors(wts,lr):
         ind = random.randrange(0,len(wts))
         w[ind]+= lr * random.choice([-1,1])
     # print(w)
-    return n
+    return w
 
 
 def normalize(array):
@@ -73,48 +73,48 @@ def normalize(array):
     return ret
 
 
-def genetic_algorithm(wts, pop_size=200, mutation_prob=0.1, max_attempts=10, max_iters=np.inf, lr=0.1):
-    def reproduce(parent1, parent2, mutation_prob):
+def genetic_algorithm(wts,pop_size=200, mutation_prob=0.1, max_attempts=10,max_iters=np.inf,lr = 0.3):
+    def reproduce(parent1,parent2,mutation_prob):
         n = np.random.randint(len(parent1))
         child = np.array([0]*len(parent1))
         # print(parent1)
         child[0:n+1] = parent1[0:n+1]
         child[n+1:] = parent2[n+1:]
-        #print(child)
+        # print(child)
         rand = np.random.uniform(size=len(parent1))
         mutate = np.where(rand < mutation_prob)[0]
-
+        
         for i in mutate:
-            child[i] = np.random.uniform(-3, 3)
+            child[i] = np.random.uniform(-3,3)
         # print(child)
         return child
-
+    
     # if curve:
     #     fitness_curve = []
-
-    population = []
+    
+    population=[]
     for i in range(pop_size):
-        w = Find_neighbors(nn, wts, lr)
-        population.extend(w)
-    print(population)    
+        w = Find_neighbors(wts,lr)
+        population.append(w)
+
     attempts = 0
     iters = 0
 
     # Calculate breeding probabilities
-    breeding_prob = []
+    breeding_prob=[]
     for i in range(pop_size):
         nn.fit(X_train, y_train, population[i])
         y_train_pred = nn.predict(X_train)
         acc1 = accuracy_score(y_train, y_train_pred)
         breeding_prob.append(acc1)
 
-    Loss = []
+    # Loss = []
 
     while (attempts < max_attempts) and (iters < max_iters):
         iters += 1
 
         bp = normalize(breeding_prob)
-
+        
         # Create next generation of population
         next_gen = []
         child_fit=[]
@@ -133,14 +133,16 @@ def genetic_algorithm(wts, pop_size=200, mutation_prob=0.1, max_attempts=10, max
             nn.fit(X_train, y_train, child)
             y_train_pred = nn.predict(X_train)
             acc1 = accuracy_score(y_train, y_train_pred)
-            loss = log_loss(y_train,y_pred)
+            loss = log_loss(y_train,y_train_pred)
             child_fit.append(acc1)
             child_loss.append(loss)
 
         # next_state = best_child()
         next_fitness = max(child_fit)
-        loss = child_loss[child_fit.index(next_fitness)]
-        Loss.append(loss)
+        Loss = child_loss[child_fit.index(next_fitness)]
+        # print("Loss:",loss)
+        # Loss.append(l)
+        # print(Loss)
         
 
         # If best child is an improvement,
@@ -153,13 +155,14 @@ def genetic_algorithm(wts, pop_size=200, mutation_prob=0.1, max_attempts=10, max
             attempts += 1
     best_wts = population[breeding_prob.index(max(breeding_prob))]
     acc = max(breeding_prob)
+    # print(Loss)
     return(best_wts,acc,Loss)
 
-def levy_gen(n):
+def levyAndGA(n):
     r = levy.rvs(size=n, scale=2)
     # print(r)
+    losses = []
     max_acc=0
-    max_wts = []
     for i in list(r):
         weights = np.random.uniform(-1, 1, 104)
         weights = weights*i
@@ -176,6 +179,7 @@ def levy_gen(n):
         if(acc1 != None and acc1 > 0.5):
             (best_fit, accuracy,Loss) = genetic_algorithm(weights1,max_iters=10)
             print(accuracy)
+            losses.append(Loss)
             if(accuracy>max_acc):
                 max_acc = accuracy
                 best_wts = best_fit
@@ -183,13 +187,14 @@ def levy_gen(n):
     y_test_pred = nn.predict(X_test)
     acc1 = accuracy_score(y_test, y_test_pred)
     print("Test accuracy obtained was: ",acc1)
+    print(losses)
 
 startTime = datetime.now()
-levy_walk(10)
+levyAndGA(10)
 print("\n\nExecution time is: ",datetime.now()-startTime)
 
 
-def levy_sim(n):
+def levyAndSA(n):
     nn1 = mlrose.NeuralNetwork(hidden_nodes=[4], activation='relu',
                                algorithm='simulated_annealing', max_iters=750,
                                bias=True, is_classifier=True, learning_rate=0.35,
@@ -219,4 +224,4 @@ def levy_sim(n):
                     max_acc = acc2
                     print(acc2)
                 # print(nn1.fitness_curve)
-levy_sim(1)
+# levyAndSA(1)
